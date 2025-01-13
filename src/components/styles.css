@@ -1,0 +1,31 @@
+/* Estilos para el modo claro */
+.row-libre.light {
+  background-color: #d4edda; /* Verde claro */
+  color: #155724; /* Texto verde oscuro */
+}
+
+.row-apartado.light {
+  background-color: #fff3cd; /* Amarillo claro */
+  color: #856404; /* Texto amarillo oscuro */
+}
+
+.row-confirmado.light {
+  background-color: #f8d7da; /* Rojo claro */
+  color: #721c24; /* Texto rojo oscuro */
+}
+
+/* Estilos para el modo oscuro */
+.row-libre.dark {
+  background-color: #1b5e20; /* Verde oscuro */
+  color: #a5d6a7; /* Texto verde claro */
+}
+
+.row-apartado.dark {
+  background-color: #795548; /* Marrón oscuro */
+  color: #ffcc80; /* Texto amarillo claro */
+}
+
+.row-confirmado.dark {
+  background-color: #b71c1c; /* Rojo oscuro */
+  color: #ef9a9a; /* Texto rojo claro */
+}

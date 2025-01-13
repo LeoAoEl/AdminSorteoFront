@@ -1,0 +1,78 @@
+/* Contenedor para centrar todo */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  width: 100vw; /* Ocupa todo el ancho */
+  margin: 0;
+  padding: 0;
+}
+
+/* Tarjeta tipo Material UI */
+.login-card {
+  background-color: white; /* Color de fondo en modo claro */
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  max-width: 30%; /* Adaptable en pantallas más pequeñas */
+  text-align: center;
+}
+.login-card2 {
+  background-color: white; /* Color de fondo en modo claro */
+  /*  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); */
+
+  text-align: center;
+}
+@media (min-width: 1200px) {
+  .login-card2 {
+    transform: scale(1.2); /* Escala todo el contenido */
+  }
+}
+/* Grupo de entradas */
+.input-group {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+/* Estilo de los inputs */
+input {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc; /* Cambiar a un borde gris claro */
+  border-radius: 8px;
+  font-size: 1.1rem;
+  box-sizing: border-box; /* Evita que el padding desborde */
+  background-color: #f7f7f7; /* Fondo claro para los inputs */
+  color: #333; /* Color de texto oscuro */
+}
+
+/* Estilo para inputs en modo oscuro */
+@media (prefers-color-scheme: dark) {
+  input {
+    background-color: #2e2e2e; /* Fondo oscuro para inputs en modo oscuro */
+    color: #ffffff; /* Color de texto claro */
+    border: 1px solid #444444; /* Borde gris más claro */
+  }
+
+  /* Estilo del texto en modo oscuro */
+  .input-group label {
+    color: #ffffff; /* Texto blanco para etiquetas en modo oscuro */
+  }
+
+  .login-card {
+    background-color: #171717; /* Fondo oscuro para la tarjeta */
+    color: #ffffff; /* Color de texto claro para el contenido de la tarjeta */
+  }
+
+  /* Estilo del texto en modo claro */
+  .input-group label {
+    color: white; /* Texto oscuro para etiquetas en modo claro */
+  }
+
+  .login-card {
+    color: white; /* Color de texto oscuro para el contenido de la tarjeta */
+  }
+}

@@ -1,0 +1,64 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* Estilos para el modo oscuro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #e0e0e0; /* Texto claro */
+    background-color: #121212; /* Fondo oscuro */
+  }
+
+  a {
+    color: #bb86fc; /* Color de enlace en modo oscuro */
+  }
+
+  a:hover {
+    color: #3700b3; /* Color de enlace al pasar el mouse */
+  }
+
+  button {
+    background-color: #333333; /* Fondo oscuro para botones */
+    color: #e0e0e0; /* Texto claro para botones */
+  }
+
+  /* Asegúrate de que los textos y botones sean legibles */
+  input,
+  textarea {
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #444444;
+  }
+}
