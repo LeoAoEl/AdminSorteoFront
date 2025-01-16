@@ -14,6 +14,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
 import AddRecordDialog from "./AddRecordDialog";
+import AddRecordDialogGanador from "./AddRecordDialogGanador";
 import UpdateRecordDialog from "./UpdateRecordDialog";
 import DialogConsultasPersonzalidas from "./DialogConsultasPersonalizadas";
 import { useMediaQuery } from "@mui/material";
@@ -46,6 +47,7 @@ const TableSelector = ({ dbConfig }) => {
   const [updateDialogOpenPersonalizadas, setUpdateDialogOpenPersonalizadas] =
     useState(false);
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
+  const [abrirModalGanador, setAbrirModalGanador] = useState(false);
   const [selectedSorteo, setSelectedSorteo] = useState(null);
   const titleStyle = {
     fontSize: "24px",
@@ -314,7 +316,9 @@ const TableSelector = ({ dbConfig }) => {
     ID_SORTEO: false, // Ocultar la columna con el campo 'ID_SORTEO'
   });
   const handleAbrirModalEditar = () => setAbrirModalEditar(true);
+  const handleAbrirModalGanador = () => setAbrirModalGanador(true);
   const handleCerrarModalEditar = () => setAbrirModalEditar(false);
+  const handleCerrarModalGanador = () => setAbrirModalGanador(false);
   const [dataSeleccionada, setDataSeleccionada] = useState([]);
   useEffect(() => {
     const rowsData = selectedRows.map((id) =>
@@ -439,6 +443,24 @@ const TableSelector = ({ dbConfig }) => {
                 Confirmar boleto/s
               </Button>
             </Grid>
+
+            <Grid item>
+              <Button
+                disabled={!selectedTable}
+                variant="contained"
+                color="success" // Color verde
+                onClick={() => {
+                  // Simulación de selección de sorteo
+                  const sorteo = tables.find(
+                    (sorteo) => sorteo.ID_SORTEO === selectedTable
+                  );
+                  setSelectedSorteo(sorteo);
+                  handleAbrirModalGanador();
+                }}
+              >
+                Ganadores
+              </Button>
+            </Grid>
             {/*      <Grid item>
               <Button
                 disabled={selectedTable === "" || selectedRows.length > 0}
@@ -456,6 +478,14 @@ const TableSelector = ({ dbConfig }) => {
             onClose={handleclosemodal}
             dbConfig={dbConfig}
             handleTableChange={todosLosSorteos}
+          />
+          <AddRecordDialogGanador
+            tableName={selectedTable}
+            open={abrirModalGanador}
+            onClose={handleCerrarModalGanador}
+            dbConfig={dbConfig}
+            handleTableChange={todosLosSorteos}
+            sorteo={selectedSorteo}
           />
           <EditRecordDialog
             sorteo={selectedSorteo}
