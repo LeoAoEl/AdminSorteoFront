@@ -300,6 +300,26 @@ const TableSelector = ({ dbConfig }) => {
         alert("Hubo un error al confirmar los boletos. Inténtalo de nuevo.");
       });
   }
+  function setUpdateBolteosDes() {
+    if (selectedRows.length === 0) return; // Verificamos que haya filas seleccionadas
+
+    axios
+      .post("http://localhost:5000/boletos/desconfirmar", { ids: selectedRows })
+      .then((response) => {
+        console.log("Boletos confirmados:", response.data);
+        // Realiza acciones adicionales, como actualizar la tabla o mostrar un mensaje de éxito
+        alert(
+          `Se Desconfirmaron ${selectedRows.length} boleto(s) exitosamente.`
+        );
+        setSelectedRows([]); // Limpia la selección
+        // Opcional: recarga los datos de la tabla
+        recargaBoletos();
+      })
+      .catch((error) => {
+        console.error("Error al confirmar boletos:", error);
+        alert("Hubo un error al confirmar los boletos. Inténtalo de nuevo.");
+      });
+  }
   const hiddenColumns = ["Id", "ID_SORTEO"]; // Lista de columnas a ocultar
   const columns = [
     { field: "id", headerName: "ID", width: 50 }, // Ocultar ID
@@ -435,12 +455,28 @@ const TableSelector = ({ dbConfig }) => {
                 disabled={
                   selectedTable === "" ||
                   selectedRows.length === 0 ||
-                  dataSeleccionada.some((row) => row?.estado === "libre") // Revisa si hay algún estado "libre"
+                  dataSeleccionada.some((row) => row?.estado !== "apartado") // Revisa si hay algún estado "libre"
                 }
                 variant="contained"
                 onClick={() => setUpdateBolteos()}
               >
                 Confirmar boleto/s
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                disabled={
+                  selectedTable === "" ||
+                  selectedRows.length === 0 ||
+                  dataSeleccionada.some(
+                    (row) =>
+                      row?.estado === "apartado" || row?.estado === "libre"
+                  ) // Revisa si hay algún estado "libre"
+                }
+                variant="contained"
+                onClick={() => setUpdateBolteosDes()}
+              >
+                Desconfirmar boleto/s
               </Button>
             </Grid>
 
