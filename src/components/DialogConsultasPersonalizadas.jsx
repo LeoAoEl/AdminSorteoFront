@@ -58,10 +58,13 @@ function UpdateRecordDialog({
     setResult([]);
 
     try {
-      const response = await axios.post("http://localhost:5000/executeQuery", {
-        query,
-        ...dbConfig,
-      });
+      const response = await axios.post(
+        "https://administradorsorteosback-production.up.railway.app/executeQuery",
+        {
+          query,
+          ...dbConfig,
+        }
+      );
       const rowsWithId = response.data.data.map((item, index) => ({
         ...item,
         id: index, // Usar el índice como id único
@@ -80,10 +83,13 @@ function UpdateRecordDialog({
 
   const handleActionSubmit = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/executeAction", {
-        query,
-        ...dbConfig,
-      });
+      const response = await axios.post(
+        "https://administradorsorteosback-production.up.railway.app/executeAction",
+        {
+          query,
+          ...dbConfig,
+        }
+      );
       setError(
         response.data.message +
           "....Para ver los resultados de tu comando sql en la primera tabla de visualización automatica,o bien ejecutando manualmente una sentencia sql desde aquí."

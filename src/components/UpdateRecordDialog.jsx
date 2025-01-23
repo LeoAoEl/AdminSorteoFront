@@ -35,10 +35,13 @@ function UpdateRecordDialog({
       };
 
       axios
-        .post("http://localhost:5000/getTableStructure", {
-          ...configDb,
-          tableName: tableName,
-        })
+        .post(
+          "https://administradorsorteosback-production.up.railway.app/getTableStructure",
+          {
+            ...configDb,
+            tableName: tableName,
+          }
+        )
         .then((response) => {
           setTableStructure(response.data.structure);
 
@@ -88,13 +91,16 @@ function UpdateRecordDialog({
     };
 
     axios
-      .post("http://localhost:5000/updateData", {
-        ...configDb,
-        tableName,
-        data: formData,
-        keyFields,
-        originalKeyValues, // Enviar los valores originales de las claves
-      })
+      .post(
+        "https://administradorsorteosback-production.up.railway.app/updateData",
+        {
+          ...configDb,
+          tableName,
+          data: formData,
+          keyFields,
+          originalKeyValues, // Enviar los valores originales de las claves
+        }
+      )
       .then((response) => {
         alert("Registro actualizado correctamente");
         handleTableChange(); // Refrescar la tabla

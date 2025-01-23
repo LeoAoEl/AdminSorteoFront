@@ -21,6 +21,9 @@ import { useMediaQuery } from "@mui/material";
 import "./styles.css";
 import EditRecordDialog from "./EditRecordDialog";
 
+import { IconButton } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
+
 const TableSelector = ({ dbConfig }) => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
@@ -69,7 +72,7 @@ const TableSelector = ({ dbConfig }) => {
   }, []);
   const todosLosSorteos = () => {
     axios
-      .get("http://localhost:5000/sorteos")
+      .get("https://administradorsorteosback-production.up.railway.app/sorteos")
       .then((response) => {
         console.log("res sorteo", response.data);
         setTables(response.data);
@@ -98,10 +101,13 @@ const TableSelector = ({ dbConfig }) => {
       setLoading(true);
       //llamada al back para traerme todos los datos de la tabla
       axios
-        .post("http://localhost:5000/getTableData", {
-          ...configDb,
-          tableName: selectedTable,
-        })
+        .post(
+          "https://administradorsorteosback-production.up.railway.app/getTableData",
+          {
+            ...configDb,
+            tableName: selectedTable,
+          }
+        )
         .then((response) => {
           //mapear su id porque daba error el componente de tabla
           const rowsWithId = response.data.map((item, index) => ({
@@ -161,7 +167,9 @@ const TableSelector = ({ dbConfig }) => {
 
       // Llamada al backend para traer los datos de la tabla seleccionada
       axios
-        .get(`http://localhost:5000/boletos/${nuevaTabla}`) // Cambié POST por GET, ya que parece más apropiado
+        .get(
+          `https://administradorsorteosback-production.up.railway.app/boletos/${nuevaTabla}`
+        ) // Cambié POST por GET, ya que parece más apropiado
         .then((response) => {
           setTableData(response.data); // Guardar los datos
           setLoading(false); // Apagar el spinner
@@ -180,7 +188,9 @@ const TableSelector = ({ dbConfig }) => {
 
     // Llamada al backend para traer los datos de la tabla seleccionada
     axios
-      .get(`http://localhost:5000/boletos/${selectedTable}`) // Cambié POST por GET, ya que parece más apropiado
+      .get(
+        `https://administradorsorteosback-production.up.railway.app/boletos/${selectedTable}`
+      ) // Cambié POST por GET, ya que parece más apropiado
       .then((response) => {
         setTableData(response.data); // Guardar los datos
         setLoading(false); // Apagar el spinner
@@ -239,11 +249,14 @@ const TableSelector = ({ dbConfig }) => {
 
     // Enviar las consultas al backend
     axios
-      .post("http://localhost:5000/deleteRows", {
-        ...configDb,
-        table: selectedTable,
-        queries: deleteQueries,
-      })
+      .post(
+        "https://administradorsorteosback-production.up.railway.app/deleteRows",
+        {
+          ...configDb,
+          table: selectedTable,
+          queries: deleteQueries,
+        }
+      )
       .then((response) => {
         alert("Fila/s eliminadas exitosamente.");
         // Recargar los datos de la tabla después de eliminar
@@ -264,9 +277,12 @@ const TableSelector = ({ dbConfig }) => {
   const cambiarEstado = async (id) => {
     try {
       // Llamada a la API para cambiar el estado del boleto
-      await axios.put(`http://localhost:5000/boletos/${id}/estado`, {
-        estado: "confirmado",
-      });
+      await axios.put(
+        `https://administradorsorteosback-production.up.railway.app/boletos/${id}/estado`,
+        {
+          estado: "confirmado",
+        }
+      );
 
       // Actualizar el estado local de la tabla
       setTableData((prev) =>
@@ -286,7 +302,10 @@ const TableSelector = ({ dbConfig }) => {
     if (selectedRows.length === 0) return; // Verificamos que haya filas seleccionadas
 
     axios
-      .post("http://localhost:5000/boletos/confirmar", { ids: selectedRows })
+      .post(
+        "https://administradorsorteosback-production.up.railway.app/boletos/confirmar",
+        { ids: selectedRows }
+      )
       .then((response) => {
         console.log("Boletos confirmados:", response.data);
         // Realiza acciones adicionales, como actualizar la tabla o mostrar un mensaje de éxito
@@ -304,7 +323,10 @@ const TableSelector = ({ dbConfig }) => {
     if (selectedRows.length === 0) return; // Verificamos que haya filas seleccionadas
 
     axios
-      .post("http://localhost:5000/boletos/desconfirmar", { ids: selectedRows })
+      .post(
+        "https://administradorsorteosback-production.up.railway.app/boletos/desconfirmar",
+        { ids: selectedRows }
+      )
       .then((response) => {
         console.log("Boletos confirmados:", response.data);
         // Realiza acciones adicionales, como actualizar la tabla o mostrar un mensaje de éxito
@@ -347,6 +369,12 @@ const TableSelector = ({ dbConfig }) => {
     setDataSeleccionada(rowsData); // Actualiza el estado con los datos seleccionados
     console.log("selected rows", rowsData);
   }, [selectedRows, tableData]);
+
+  function recargarEndpoint() {
+    if (selectedTable) {
+      recargaBoletos();
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -497,6 +525,19 @@ const TableSelector = ({ dbConfig }) => {
                 Ganadores
               </Button>
             </Grid>
+            <Grid item>
+              <IconButton
+                onClick={() => recargarEndpoint()} // Aquí llamas a tu función para recargar el endpoint
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <RefreshIcon />
+              </IconButton>
+            </Grid>
+
             {/*      <Grid item>
               <Button
                 disabled={selectedTable === "" || selectedRows.length > 0}

@@ -48,7 +48,7 @@ function AddRecordDialog({
         //selectedDB,
       };
       axios
-        .post("http://localhost:5000/getTableStructure", {
+        .post("https://administradorsorteosback-production.up.railway.app/getTableStructure", {
           ...configDb,
           tableName: tableName,
         })
@@ -88,9 +88,12 @@ function AddRecordDialog({
     // Aquí puedes realizar validaciones si es necesario
 
     axios
-      .post("http://localhost:5000/sorteos", {
-        data: formData,
-      })
+      .post(
+        "https://administradorsorteosback-production.up.railway.app/sorteos",
+        {
+          data: formData,
+        }
+      )
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);

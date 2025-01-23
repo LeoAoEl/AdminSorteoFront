@@ -20,7 +20,7 @@ const ConnectionForm = ({ onConnect }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/connect",
+        "https://administradorsorteosback-production.up.railway.app/connect",
         formData
       );
       alert(response.data.message);

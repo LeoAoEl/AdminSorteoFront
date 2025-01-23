@@ -33,7 +33,7 @@ const Login2 = ({ formData, setFormData, onConnect, setIsLoggedIn }) => {
     try {
       //con esto mando a llamar el método post y envio los datos del formulario
       const response = await axios.post(
-        "http://localhost:5000/connect",
+        "https://administradorsorteosback-production.up.railway.app/connect",
         formData
       );
       alert(response.data.message);

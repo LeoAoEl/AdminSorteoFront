@@ -54,9 +54,12 @@ function AddRecordDialog({ open, onClose, sorteo }) {
 
       // Obtener lista de ganadores filtrada por ID_SORTEO
       axios
-        .get("http://localhost:5000/ganadores", {
-          params: { ID_SORTEO: sorteo.ID_SORTEO },
-        })
+        .get(
+          "https://administradorsorteosback-production.up.railway.app/ganadores",
+          {
+            params: { ID_SORTEO: sorteo.ID_SORTEO },
+          }
+        )
         .then((response) => {
           // Ordenar ganadores por lugar
           const sortedGanadores = response.data.sort(
@@ -79,9 +82,12 @@ function AddRecordDialog({ open, onClose, sorteo }) {
       return;
     }
     axios
-      .post("http://localhost:5000/ganadores", {
-        data: formData,
-      })
+      .post(
+        "https://administradorsorteosback-production.up.railway.app/ganadores",
+        {
+          data: formData,
+        }
+      )
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
@@ -112,7 +118,9 @@ function AddRecordDialog({ open, onClose, sorteo }) {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/ganadores/${id}`)
+      .delete(
+        `https://administradorsorteosback-production.up.railway.app/ganadores/${id}`
+      )
       .then((response) => {
         alert("Ganador eliminado correctamente.");
         setGanadores((prevGanadores) =>

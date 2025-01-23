@@ -61,9 +61,12 @@ function EditRecordDialog({
 
   const handleSubmit = () => {
     axios
-      .put(`http://localhost:5000/sorteos/${sorteo.ID_SORTEO}`, {
-        data: formData,
-      })
+      .put(
+        `https://administradorsorteosback-production.up.railway.app/sorteos/${sorteo.ID_SORTEO}`,
+        {
+          data: formData,
+        }
+      )
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
