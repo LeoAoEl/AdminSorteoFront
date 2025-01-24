@@ -20,6 +20,7 @@ import DialogConsultasPersonzalidas from "./DialogConsultasPersonalizadas";
 import { useMediaQuery } from "@mui/material";
 import "./styles.css";
 import EditRecordDialog from "./EditRecordDialog";
+import { CircularProgress } from "@mui/material";
 
 import { IconButton } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -33,6 +34,8 @@ const TableSelector = ({ dbConfig }) => {
       mode: prefersDarkMode ? "dark" : "light", // Se ajusta al esquema del sistema
     },
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
   //para guardar mi listado de tablas disponibles
   const [tables, setTables] = useState([]);
   //para guardar la tabla seleccionada
@@ -300,7 +303,7 @@ const TableSelector = ({ dbConfig }) => {
 
   function setUpdateBolteos() {
     if (selectedRows.length === 0) return; // Verificamos que haya filas seleccionadas
-
+    setIsLoading(true);
     axios
       .post(
         "https://administradorsorteosback-production.up.railway.app/boletos/confirmar",
@@ -313,14 +316,17 @@ const TableSelector = ({ dbConfig }) => {
         setSelectedRows([]); // Limpia la selección
         // Opcional: recarga los datos de la tabla
         recargaBoletos();
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error al confirmar boletos:", error);
         alert("Hubo un error al confirmar los boletos. Inténtalo de nuevo.");
+        setIsLoading(false);
       });
   }
   function setUpdateBolteosDes() {
     if (selectedRows.length === 0) return; // Verificamos que haya filas seleccionadas
+    setIsLoading2(true);
 
     axios
       .post(
@@ -336,6 +342,7 @@ const TableSelector = ({ dbConfig }) => {
         setSelectedRows([]); // Limpia la selección
         // Opcional: recarga los datos de la tabla
         recargaBoletos();
+        setIsLoading2(false);
       })
       .catch((error) => {
         console.error("Error al confirmar boletos:", error);
@@ -481,19 +488,26 @@ const TableSelector = ({ dbConfig }) => {
             <Grid item>
               <Button
                 disabled={
+                  isLoading || // Deshabilitar mientras está cargando
                   selectedTable === "" ||
                   selectedRows.length === 0 ||
-                  dataSeleccionada.some((row) => row?.estado !== "apartado") // Revisa si hay algún estado "libre"
+                  dataSeleccionada.some((row) => row?.estado !== "apartado")
                 }
                 variant="contained"
                 onClick={() => setUpdateBolteos()}
+                startIcon={
+                  isLoading ? (
+                    <CircularProgress size={20} color="inherit" />
+                  ) : null
+                } // Mostrar spinner
               >
-                Confirmar boleto/s
+                {isLoading ? "Procesando..." : "Confirmar boleto/s"}
               </Button>
             </Grid>
             <Grid item>
               <Button
                 disabled={
+                  isLoading2 ||
                   selectedTable === "" ||
                   selectedRows.length === 0 ||
                   dataSeleccionada.some(
@@ -503,8 +517,13 @@ const TableSelector = ({ dbConfig }) => {
                 }
                 variant="contained"
                 onClick={() => setUpdateBolteosDes()}
+                startIcon={
+                  isLoading2 ? (
+                    <CircularProgress size={20} color="inherit" />
+                  ) : null
+                }
               >
-                Desconfirmar boleto/s
+                {isLoading2 ? "Procesando..." : "Desconfirmar boleto/s"}
               </Button>
             </Grid>
 
